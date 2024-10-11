@@ -1,13 +1,16 @@
 from datetime import datetime
 from bs4 import BeautifulSoup as BS
 import requests
-import schedule
+from main import app
+
 
 
 current_date = datetime.now().strftime('%d.%m.%Y')
 current_month = datetime.now().month
 
-def today_matches():
+
+@app.get("/today_matches")
+async def today_matches() -> dict:
     url_site = f"https://www.sports.ru/hockey/tournament/khl/calendar/?s=969354&m={current_month}"
     r = requests.get(url_site)
     html = BS(r.content, 'html.parser')
@@ -24,15 +27,3 @@ def today_matches():
             matches[c] = f"{owner[0].text} {''.join([i.text for i in score])} {guest[0].text}"
             c += 1
     return matches
-
-today_matches()
-
-# def main():
-#     schedule.every(3).seconds.do(today_matches)
-#     #schedule.every().day.at(Time)
-#     while True:
-#         schedule.run_pending()
-#
-#
-# if __name__ == "__main__":
-#     main()
