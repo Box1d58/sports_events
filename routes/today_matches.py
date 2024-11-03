@@ -6,8 +6,8 @@ from bs4 import BeautifulSoup as BS
 from fastapi import APIRouter, status
 
 
-from parser import parser_today_matches
-from models import TodayInfo
+from app.parser import parser_today_matches
+from app.models import TodayInfo
 
 
 router = APIRouter()
