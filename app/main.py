@@ -2,7 +2,7 @@ import uvicorn
 
 
 from fastapi import FastAPI
-from routes.today_matches import router
+from app.routes.today_matches import router
 
 
 app = FastAPI()
