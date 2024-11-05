@@ -7,7 +7,7 @@ from fastapi import APIRouter, status
 
 
 from app.parser import parser_today_matches
-from app.models import TodayInfo
+from app.models_pars import TodayInfo
 
 
 router = APIRouter()
