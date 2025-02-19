@@ -1,5 +1,9 @@
 from pydantic import BaseModel
 
+class Match(BaseModel):
+    match_date: str
+    owner: str
+    guest: str
 
 class GoalInfo(BaseModel):
     goal_time: str
@@ -18,11 +22,15 @@ class MatchInfo(BaseModel):
     status: str
 
 
-class TodayEvent(BaseModel):
-    match_info: MatchInfo
-    owner: OwnerGuest
-    guest: OwnerGuest
+# class TodayEvent(BaseModel):
+#     match_date: MatchInfo
+#     owner: OwnerGuest
+#     guest: OwnerGuest
 
+class TodayEvent(BaseModel):
+    match_date: str
+    owner: str
+    guest: str
 
 class TodayInfo(BaseModel):
     status: int
