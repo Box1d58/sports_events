@@ -23,10 +23,10 @@ def upgrade() -> None:
     op.create_table('matches',
     sa.Column('id', sa.Integer(),primary_key=True, nullable=False, autoincrement=True),
     sa.Column('match_date', sa.String(), nullable=False),
+    sa.Column('time', sa.String(), nullable=False),
     sa.Column('owner', sa.String(), nullable=False),
     sa.Column('guest', sa.String(), nullable=False),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
-    sa.Column('updated_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

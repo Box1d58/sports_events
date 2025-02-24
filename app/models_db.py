@@ -16,10 +16,10 @@ class MatchDB(Base):
 
     id: Mapped[int_pk]
     match_date: Mapped[str]
+    time: Mapped[str]
     owner: Mapped[str]
     guest: Mapped[str]
     created_at: Mapped[created_at]
-    updated_at: Mapped[updated_at]
 
     def __str__(self):
         return f"{self.__class__.__name__}(id = {self.id}, owner = {self.owner}, guest = {self.guest})"

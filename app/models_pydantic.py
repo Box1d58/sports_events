@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 class Match(BaseModel):
     match_date: str
+    time: str
     owner: str
     guest: str
 
@@ -21,14 +22,9 @@ class MatchInfo(BaseModel):
     date: str
     status: str
 
-
-# class TodayEvent(BaseModel):
-#     match_date: MatchInfo
-#     owner: OwnerGuest
-#     guest: OwnerGuest
-
 class TodayEvent(BaseModel):
     match_date: str
+    time: str
     owner: str
     guest: str
 

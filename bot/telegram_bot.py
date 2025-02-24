@@ -5,13 +5,13 @@ from aiogram.filters import Command, CommandStart
 from aiogram.types import Message
 from datetime import datetime
 
-from app.models_db import MatchDB
-from app.database import async_session_maker
+
 import bot.keyboard as kb
+from app.config import settings
+
 
 current_date = datetime.now().strftime("%d.%m.%Y")
-TOKEN = '7886890200:AAEdfWx7raVae1wOo-k2VqQGQgBeXnRPCHQ'
-bot = Bot(token=TOKEN)
+bot = Bot(settings.TOKEN)
 dp = Dispatcher()
 
 
@@ -25,11 +25,13 @@ async def events(message: Message):
         result = await client.get('http://127.0.0.1:8000/events')
     mes = f'Today:  {current_date}'
     for i in result.json().get('today_events'):
-        mes += f'\n {i['owner']}  :  {i['guest']}'
+        mes += f'\n { i['time']}:   {i['owner']}  -  {i['guest']}'
     await message.answer(mes)
 
 async def main():
     await dp.start_polling(bot)
+
+    print("Бот запущен. Ожидаем задачи...")
 
 if __name__ == '__main__':
 

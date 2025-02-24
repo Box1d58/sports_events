@@ -1,5 +1,3 @@
-import requests
-
 from bs4 import BeautifulSoup as BS
 
 
@@ -15,6 +13,7 @@ def parser_today_matches(current_date: str, html: BS) -> list:
             guest = el.select(".guests-td > .rel > .player")[0].text
             match = {
                 "match_date": date_info[0].text.strip().split("|")[0],
+                "time": date_info[0].text.strip().split("|")[1],
                 "owner": owner,
                 "guest": guest
             }
