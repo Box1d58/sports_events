@@ -3,30 +3,25 @@ from pydantic import BaseModel
 class Match(BaseModel):
     match_date: str
     time: str
-    owner: str
-    guest: str
-
-class GoalInfo(BaseModel):
-    goal_time: str
-    player: str
-
-
-class OwnerGuest(BaseModel):
-    team: str
-    score: int | str
-    players: list[GoalInfo]
-
-
-class MatchInfo(BaseModel):
-    time: str
-    date: str
+    scores: str
+    owner: int
+    guest: int
     status: str
+
+class Team(BaseModel):
+    title: str
+
+class User(BaseModel):
+    nickname: str
+    follow_team: int
 
 class TodayEvent(BaseModel):
     match_date: str
     time: str
-    owner: str
-    guest: str
+    scores: str
+    owner: int
+    guest: int
+    status: str
 
 class TodayInfo(BaseModel):
     status: int

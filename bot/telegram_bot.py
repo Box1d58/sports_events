@@ -29,9 +29,10 @@ async def events(message: Message):
     await message.answer(mes)
 
 async def main():
+    print("Бот запущен. Ожидаем задачи...")
     await dp.start_polling(bot)
 
-    print("Бот запущен. Ожидаем задачи...")
+
 
 if __name__ == '__main__':
 
