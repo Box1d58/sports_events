@@ -3,8 +3,8 @@ import uvicorn
 from fastapi import FastAPI
 
 from app.routes.today_matches import router
-from app.routes.post_today_matches import router_2
-from app.routes.get_events import router_events
+from app.routes.get_today_matches import router_2
+from app.routes.get_events_in_db import router_events
 from app.routes.upgrade_events import router_upgrade
 from app.routes.teams_add import router_team
 
