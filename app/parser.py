@@ -33,12 +33,12 @@ async def parser_today_matches(current_date: str, html: BS) -> list:
                 owner_goal = int(
                     html_url.select(
                         ".match-summary__state > .match-summary__state-matchboard > .matchboard > span"
-                    )[0].text
+                    )[0].text[0]
                 )
                 guest_goal = int(
                     html_url.select(
                         ".match-summary__state > .match-summary__state-matchboard > .matchboard > span"
-                    )[2].text
+                    )[2].text[0]
                 )
             else:
                 owner_goal = "-"
