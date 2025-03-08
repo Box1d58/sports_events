@@ -1,2 +1,2 @@
 run_app:
-	python main.py
+	python app.main.py

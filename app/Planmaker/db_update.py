@@ -7,7 +7,7 @@ from app.run_daily import run_daily
 
 async def main():
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(run_daily, trigger=CronTrigger(hour=17, minute=30))
+    scheduler.add_job(run_daily, trigger=CronTrigger(hour=17, minute=29))
     scheduler.start()
 
     print("Планировщик запущен. Ожидаем задачи...")

@@ -5,16 +5,15 @@ from fastapi import APIRouter, HTTPException, status
 from httpx import AsyncClient
 
 from app.config import settings
-from app.models_pydantic import TodayInfo, TodayEvent
+from app.models_pydantic import TodayInfo
 from app.parser import parser_today_matches
-from app.models_db import MatchDB
-from app.database import async_session_maker
 
 
-router_add_matches = APIRouter()
+
+router_get_parsing = APIRouter()
 
 
-@router_add_matches.post("/today_matches", response_model=TodayInfo)
+@router_get_parsing.get("/get_today_matches", response_model=TodayInfo)
 async def today_matches() -> dict:
     current_date = datetime.now().strftime("%d.%m.%Y")
     current_month = datetime.now().month
@@ -26,10 +25,6 @@ async def today_matches() -> dict:
     html = BS(response.content, "html.parser")
     try:
         matches = await parser_today_matches(current_date, html)
-        for match in matches:
-            match_instance = MatchDB(**match)
-            async with async_session_maker() as session:
-               await match_instance.create_match(match=match_instance, session=session)
         if not matches:
             raise ValueError("No items for parsing")
     except ValueError as e:
