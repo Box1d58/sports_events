@@ -11,10 +11,10 @@ from app.models_db import MatchDB
 from app.database import async_session_maker
 
 
-router = APIRouter()
+router_add_matches = APIRouter()
 
 
-@router.get("/today_matches", response_model=TodayInfo)
+@router_add_matches.post("/today_matches", response_model=TodayInfo)
 async def today_matches() -> dict:
     current_date = datetime.now().strftime("%d.%m.%Y")
     current_month = datetime.now().month

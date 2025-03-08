@@ -5,15 +5,15 @@ from fastapi import APIRouter, HTTPException, status
 from httpx import AsyncClient
 
 from app.config import settings
-from app.models_pydantic import TodayInfo, TodayEvent
+from app.models_pydantic import TodayInfo
 from app.parser import parser_today_matches
 
 
 
-router_2 = APIRouter()
+router_get_parsing = APIRouter()
 
 
-@router_2.get("/get_today_matches", response_model=TodayInfo)
+@router_get_parsing.get("/get_today_matches", response_model=TodayInfo)
 async def today_matches() -> dict:
     current_date = datetime.now().strftime("%d.%m.%Y")
     current_month = datetime.now().month

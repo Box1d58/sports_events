@@ -1,7 +1,13 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-main = ReplyKeyboardMarkup(keyboard=[
-    [KeyboardButton(text='Today matches')]
+start = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Обновить данные')]
 ],
     resize_keyboard=True,
-    input_field_placeholder='Choose')
+    input_field_placeholder='Выбери')
+
+upgrade_info = ReplyKeyboardMarkup(keyboard=[
+    [KeyboardButton(text='Сегодняшние матчи')]
+],
+    resize_keyboard=True,
+    input_field_placeholder='Выбери')

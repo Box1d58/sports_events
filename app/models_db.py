@@ -1,7 +1,7 @@
-from sqlalchemy.orm import relationship, Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import select, update, ForeignKey
-from app.database import Base, str_uniq, int_pk, created_at, updated_at
-from datetime import date, datetime
+from app.database import Base, int_pk, created_at, updated_at
+from datetime import datetime
 
 from app.database import async_session_maker as Session
 from app.models_pydantic import Match, Team, User
@@ -78,6 +78,12 @@ class TeamsDB(Base):
         result = await session.execute(query)
         return result.scalar()
 
+    @classmethod
+    async def get_team_title(self, session: Session, current_id: int):
+        query = select(TeamsDB.title).where(TeamsDB.id == current_id)
+        result = await session.execute(query)
+        return result.scalar()
+
 class UsersDB(Base):
     __tablename__ = 'users'
 
@@ -85,4 +91,3 @@ class UsersDB(Base):
     nickname: Mapped[str]
     follow_team: Mapped[int] = mapped_column(ForeignKey('teams.id'))
     created_at: Mapped[created_at]
-

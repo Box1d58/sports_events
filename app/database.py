@@ -3,7 +3,7 @@ from typing import Annotated
 
 from sqlalchemy import func
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, AsyncAttrs
-from sqlalchemy.orm import DeclarativeBase, declared_attr, Mapped, mapped_column, sessionmaker
+from sqlalchemy.orm import DeclarativeBase, mapped_column, sessionmaker
 
 from app.config import get_db_url
 
