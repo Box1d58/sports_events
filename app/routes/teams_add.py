@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status
 
 from app.database import async_session_maker
-from app.models_db import TeamsDB
+from app.models_db.teams import TeamsDB
 
 teams = [{'title':'Авангард'}, {'title':'Автомобилист'}, {'title':'Адмирал'},
          {'title':'Ак Барс'}, {'title':'Амур'}, {'title':'Барыс'}, {'title':'Витязь'},
@@ -20,3 +20,9 @@ async def teams_add():
         async with async_session_maker() as session:
             await team_instance.create_team(team=team_instance, session=session)
     return {'status': status.HTTP_200_OK}
+
+@router_team.get('/get_teams')
+async def get_teams():
+    async with async_session_maker() as session:
+        result = await TeamsDB.get_teams(session=session)
+    return {'status': status.HTTP_200_OK, 'teams': result}

@@ -2,6 +2,7 @@ import uvicorn
 
 from fastapi import FastAPI
 
+from app.routes.get_follow import router_follow
 from app.routes.today_matches import router_add_matches
 from app.routes.get_today_matches import router_get_parsing
 from app.routes.get_events_in_db import router_get_events
@@ -11,6 +12,7 @@ from app.routes.teams_add import router_team
 
 app = FastAPI()
 app.include_router(router_add_matches)
+app.include_router(router_follow)
 app.include_router(router_get_parsing)
 app.include_router(router_upgrade)
 app.include_router(router_get_events)

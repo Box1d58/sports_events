@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup as BS
 
 from app.database import async_session_maker
-from app.models_db import TeamsDB
+from app.models_db.teams import TeamsDB
 
 
 async def parser_today_matches(current_date: str, html: BS) -> list:

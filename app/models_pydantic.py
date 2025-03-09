@@ -11,9 +11,9 @@ class Match(BaseModel):
 class Team(BaseModel):
     title: str
 
-class User(BaseModel):
-    nickname: str
-    follow_team: int
+class Follow(BaseModel):
+    user_id: int
+    follow_team: int| None
 
 class TodayEvent(BaseModel):
     match_date: str

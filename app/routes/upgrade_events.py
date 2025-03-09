@@ -3,7 +3,7 @@ import httpx
 from fastapi import APIRouter, HTTPException, status
 
 from app.models_pydantic import TodayInfo, TodayEvent
-from app.models_db import MatchDB
+from app.models_db.matches import MatchDB
 from app.database import async_session_maker
 
 

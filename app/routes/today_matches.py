@@ -7,7 +7,7 @@ from httpx import AsyncClient
 from app.config import settings
 from app.models_pydantic import TodayInfo, TodayEvent
 from app.parser import parser_today_matches
-from app.models_db import MatchDB
+from app.models_db.matches import MatchDB
 from app.database import async_session_maker
 
 
