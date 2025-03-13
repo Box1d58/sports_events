@@ -1,10 +1,9 @@
 import asyncio
 import httpx
 import logging
-from aiogram import Bot, Dispatcher, F
-from aiogram.client.default import DefaultBotProperties
-from aiogram.filters import CommandStart
-from aiogram.types import Message, CallbackQuery
+from aiogram import Bot, Dispatcher, F, types
+from aiogram.filters import CommandStart, Command
+from aiogram.types import Message, CallbackQuery, MessageEntity
 from aiogram.fsm.state import StatesGroup, State
 from aiogram.fsm.context import FSMContext
 from datetime import datetime
@@ -28,8 +27,8 @@ class SelectTeam(StatesGroup):
 
 @dp.message(CommandStart())
 async def start_bot(message: Message):
-    logging.info(message.from_user.username)
-    logging.info(message.from_user.id)
+    if message.from_user.id != 1096280248:
+        await bot.send_message(1096280248, f'User: {message.from_user.username} using the bot')
     async with async_session_maker() as session:
         await FollowDB.create_follow(new_user_id=message.from_user.id, follow=None, session=session)
     await message.reply("👋 Привет! Я твой помощник по КХЛ.\n"
@@ -39,11 +38,14 @@ async def start_bot(message: Message):
             " Отправлять уведомления в день игры\n\n"
             "🚀 Давай начнём! Нажми кнопку ниже, чтобы выбрать команду или посмотреть сегодняшние матчи."
                         , reply_markup=kb.upgrade_info)
+    logging.info(message.from_user.id)
+    logging.info(message.from_user.username)
+
 
 @dp.message(F.text == 'Сегодняшние матчи')
 async def events(message: Message):
-    logging.info(message.from_user.username)
-    logging.info(message.from_user.id)
+    if message.from_user.id != 1096280248:
+        await bot.send_message(1096280248, f'User: {message.from_user.username} using the bot')
     async with httpx.AsyncClient() as client:
         result = await client.get('http://127.0.0.1:8000/events')
     mes = f'📆 Сегодняшняя дата:{current_date}\n\n'
@@ -60,9 +62,13 @@ async def events(message: Message):
         mes += f'⏳ Статус: {i['status']}\n\n'
        # mes += f'\n------------------------------'
     await message.answer(mes,parse_mode='HTML', reply_markup=kb.upgrade)
+    logging.info(message.from_user.id)
+    logging.info(message.from_user.username)
 
 @dp.message(F.text == 'Выбрать команду')
 async def follow_1(message: Message, state: FSMContext):
+    if message.from_user.id != 1096280248:
+        await bot.send_message(1096280248, f'User: {message.from_user.username} using the bot')
     await state.set_state(SelectTeam.id)
     await message.answer('📋 Список доступных команд:\n\n')
     async with AsyncClient() as client:
@@ -91,13 +97,13 @@ async def follow_2(message: Message, state: FSMContext):
 
 @dp.callback_query(F.data == 'upgrade_info')
 async def upgrade_info(callback: CallbackQuery):
-    logging.info(callback.message.from_user.username)
-    logging.info(callback.message.from_user.id)
     await callback.message.answer('🔄 Начинаю обновление информации...')
+    await callback.answer()
     async with httpx.AsyncClient() as client:
         await client.put('http://127.0.0.1:8000/upgradeDB', timeout=100)
     await callback.message.answer('🎉 Успех! Данные обновлены.',reply_markup=kb.upgrade_info)
-    await callback.answer()
+    logging.info(callback.message.from_user.id)
+    logging.info(callback.message.from_user.username)
 
 async def send_message():
     async with AsyncClient() as client:
@@ -116,11 +122,22 @@ async def send_message():
                     logging.error(f'❌ Ошибка отправки сообщения пользователю {i['user_id']}')
 
 
+@dp.message()
+async def get_custom_emoji(message: Message):
+    if message.entities:
+        for entity in message.entities:
+            if entity.type == "custom_emoji":
+                await message.answer(f"Найден custom_emoji_id: {entity.custom_emoji_id}")
+                await bot.send_message(message.from_user.id,
+                                       f"<tg-emoji emoji-id='{entity.custom_emoji_id}'></tg-emoji>",
+                                       parse_mode="HTML")
+    else:
+        await message.answer("Эмодзи не найдено в сообщении.")
+
 async def main():
     print("Бот запущен. Ожидаем задачи...")
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
-
 
 
 if __name__ == '__main__':
